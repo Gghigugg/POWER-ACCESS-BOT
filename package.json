@@ -1,0 +1,9 @@
+{
+  "name": "power-access-telegram-bot",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Telegram phishing-awareness training bot",
+  "engines": {
+    "node": ">=18"
+  }
+}
