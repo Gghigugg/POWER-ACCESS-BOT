@@ -1,35 +1,15 @@
-# POWER ACCESS BOT — Phishing Awareness
+# POWER ACCESS BOT — Social Media Safety Demo
 
-A Telegram chat bot that teaches users to recognize social-engineering and phishing attempts.
+Telegram bot with selectable training previews:
+- Followers demo: 1K, 2K, 5K, 10K
+- Blue Tick / Verified Badge awareness demo
+- Instagram Plus / Meta One feature previews
+- Creator and Business feature preview
+- Phishing safety guide
 
-## Demo flow
-- Send /start to open the training menu.
-- Tap **Start Demo** to view a clearly labelled fictional suspicious message.
-- Tap **Inspect Message** to see the safe simulated preview.
-- Tap **Warning Signs** to learn what makes the message suspicious.
-- Use **Restart Demo** to repeat the exercise.
+All screens are clearly marked as training simulations. The bot does not provide followers, verification, subscriptions, or account upgrades. It never requests passwords, OTPs, recovery codes, or payment details. It is not an official Instagram or Meta bot.
 
-## Safety
-- Training simulation only; it does not impersonate Instagram or any other service.
-- No username, password, OTP, recovery code, or payment details are requested.
-- No credential collection, storage, or forwarding.
-- No database or user tracking is included.
+## Setup
+Create a Telegram bot using @BotFather. Deploy this repository as a Node.js serverless project and set `TELEGRAM_BOT_TOKEN` in the hosting provider's environment variables. Optionally set `TELEGRAM_WEBHOOK_SECRET`. Configure the Telegram webhook to point to `/api/webhook` on your deployed domain. Keep the bot token private and never commit it to GitHub.
 
-## Project structure
-- api/webhook.js — Telegram webhook handler
-- vercel.json — routes Telegram updates to the handler
-- .env.example — required environment variable names
-
-## Deploy
-1. Create a bot with **@BotFather** on Telegram and copy its bot token.
-2. Import this repository into Vercel and deploy it as a Node.js serverless project.
-3. In Vercel Project Settings → Environment Variables, add:
-   - TELEGRAM_BOT_TOKEN = your BotFather token
-   - Optional: TELEGRAM_WEBHOOK_SECRET = a random 32–64 character secret using letters, numbers, underscores, or hyphens
-4. Redeploy after adding environment variables.
-5. Set the Telegram webhook to:
-   https://api.telegram.org/botYOUR_BOT_TOKEN/setWebhook?url=https://YOUR-VERCEL-DOMAIN/api/webhook
-   If you set TELEGRAM_WEBHOOK_SECRET, include &secret_token=YOUR_SECRET in that URL.
-6. Open your bot in Telegram and send /start.
-
-Keep the bot token private. Never commit it to GitHub or paste it into public chats. This repository contains source code only; the bot is not live until deployment and webhook setup are complete.
+This repository contains source code only. The bot is not live until deployment and webhook setup are complete. Plan features and availability can vary by region and account; check details in the official app.
