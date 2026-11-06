@@ -19,58 +19,114 @@ async function telegram(method, token, payload) {
 
 function welcomeText() {
   return [
-    "🛡️ <b>POWER ACCESS — SECURITY LAB</b>",
+    "🦊 <b>POWER ACCESS — DEMO CENTER</b>",
     "",
-    "Welcome to a short phishing-awareness exercise.",
-    "Everything in this bot is a fictional <b>TRAINING SIMULATION</b>.",
+    "Choose a demo category to preview how a social-media offer or promotion screen might appear.",
     "",
-    "You will inspect a suspicious social-media message and learn how to spot red flags.",
-    "",
-    "🔒 We will never ask for your password, OTP, or recovery code."
+    "⚠️ <b>TRAINING SIMULATION ONLY</b>",
+    "No followers, verification badge, paid plan, or account upgrade is provided here.",
+    "We never ask for passwords, OTPs, or recovery codes."
   ].join("\n");
 }
 
-function demoText() {
+function mainMenu() {
+  return keyboard([
+    [{ text: "👥 Followers Demo", callback_data: "followers_menu" }],
+    [{ text: "☑️ Blue Tick / Verified Demo", callback_data: "blue_tick" }],
+    [{ text: "✨ Instagram Plus / Meta One", callback_data: "meta_one" }],
+    [{ text: "🎬 Creator & Business Features", callback_data: "creator_features" }],
+    [{ text: "🛡️ Phishing Safety Guide", callback_data: "warnings" }]
+  ]);
+}
+
+function followersMenu() {
+  return keyboard([
+    [{ text: "1K Followers", callback_data: "followers_1k" }, { text: "2K Followers", callback_data: "followers_2k" }],
+    [{ text: "5K Followers", callback_data: "followers_5k" }, { text: "10K Followers", callback_data: "followers_10k" }],
+    [{ text: "↩️ Main Menu", callback_data: "home" }]
+  ]);
+}
+
+function followersPreview(amount) {
   return [
-    "⚠️ <b>TRAINING SIMULATION — FICTIONAL MESSAGE</b>",
+    "⚠️ <b>TRAINING SIMULATION — FOLLOWERS OFFER</b>",
     "",
-    "<b>Sender:</b> Social Account Alert (unverified)",
-    "<b>Message:</b>",
-    "“Your account may be restricted today. Verify immediately using the link below to avoid losing access.”",
+    `<b>Selected preview:</b> ${amount} followers`,
     "",
-    "<i>Example link:</i> [suspicious link hidden]",
+    "A suspicious promotion might promise fast follower growth or guaranteed results.",
     "",
-    "This message is invented for training. Do not open unexpected links or share account details.",
+    "🔎 <b>Check before trusting:</b>",
+    "• Is the seller asking for your Instagram password?",
+    "• Are they promising instant or guaranteed followers?",
+    "• Are they asking for payment through an unverified account?",
+    "• Could the offer use bots or fake engagement?",
     "",
-    "What would you do next?"
+    "✅ This is only a visual training preview. No followers are added, no payment is taken, and no account is connected."
   ].join("\n");
 }
 
-function previewText() {
+function blueTickPreview() {
   return [
-    "🔍 <b>SIMULATED LINK PREVIEW</b>",
+    "⚠️ <b>TRAINING SIMULATION — VERIFIED BADGE</b>",
     "",
-    "The message pressures you to act immediately and pushes you toward an unexpected link.",
+    "A suspicious offer may claim it can provide a guaranteed blue verification badge.",
     "",
-    "A real phishing page may imitate a familiar brand to trick people. This demo deliberately does <b>not</b> create a login page or ask for any details.",
+    "🔎 <b>Warning signs:</b>",
+    "• “Guaranteed blue tick” from an unofficial seller.",
+    "• Requests for password, OTP, or recovery code.",
+    "• Pressure to pay immediately.",
+    "• Fake support accounts or unofficial links.",
     "",
-    "Choose <b>Warning Signs</b> to learn how to check the message safely."
+    "✅ Verification must be handled through official Instagram / Meta processes. This demo cannot verify an account or issue a badge."
+  ].join("\n");
+}
+
+function metaOnePreview() {
+  return [
+    "✨ <b>TRAINING SIMULATION — INSTAGRAM PLUS / META ONE</b>",
+    "",
+    "Choose a feature group to preview:",
+    "",
+    "• Story tools and audience controls",
+    "• Story insights and previews",
+    "• Profile and app customisation",
+    "• AI creation tools",
+    "• Creator / Business tools",
+    "",
+    "Meta's plans and features can vary by country, account, and rollout. Check availability and pricing inside the official app.",
+    "",
+    "This is an informational preview only. It does not activate a subscription."
+  ].join("\n");
+}
+
+function creatorPreview() {
+  return [
+    "🎬 <b>TRAINING SIMULATION — CREATOR / BUSINESS</b>",
+    "",
+    "Example feature categories:",
+    "• Enhanced profile and links",
+    "• Follow and audience tools",
+    "• Scheduling and publishing",
+    "• Insights and analytics",
+    "• Team access and business support",
+    "",
+    "Availability depends on the official Meta plan and account eligibility.",
+    "",
+    "⚠️ This is not an official Meta checkout or subscription page."
   ].join("\n");
 }
 
 function warningText() {
   return [
-    "🚨 <b>5 PHISHING RED FLAGS</b>",
+    "🛡️ <b>PHISHING SAFETY GUIDE</b>",
     "",
-    "1️⃣ <b>Urgency:</b> “Act now” or threats of immediate suspension.",
-    "2️⃣ <b>Unknown sender:</b> The account is unverified or unexpected.",
-    "3️⃣ <b>Unexpected link:</b> The message asks you to visit a link instead of opening the official app yourself.",
-    "4️⃣ <b>Secret requests:</b> Passwords, OTPs, and recovery codes should never be shared in a message.",
-    "5️⃣ <b>Pressure and fear:</b> Scammers try to stop you from thinking or checking.",
+    "1️⃣ Be careful with guaranteed followers or instant blue-tick offers.",
+    "2️⃣ Never share your password, OTP, or recovery code.",
+    "3️⃣ Avoid unknown links and unofficial payment requests.",
+    "4️⃣ Verify subscriptions and account notices inside the official app.",
+    "5️⃣ Report suspicious sellers and messages.",
     "",
-    "✅ <b>Stay safe:</b> Close the message, open the official app directly, review alerts there, and report suspicious messages.",
-    "",
-    "🎓 <b>TRAINING COMPLETE</b> — Think before you tap."
+    "🎓 <b>Stay safe — think before you tap.</b>"
   ].join("\n");
 }
 
@@ -79,7 +135,7 @@ async function sendStart(chatId, token) {
     chat_id: chatId,
     text: welcomeText(),
     parse_mode: "HTML",
-    reply_markup: keyboard([[{ text: "▶️ Start Demo", callback_data: "start_demo" }]])
+    reply_markup: mainMenu()
   });
 }
 
@@ -90,27 +146,48 @@ async function handleCallback(query, token) {
   if (!chatId || !messageId) return;
 
   let text;
-  let rows;
-  switch (query.data) {
-    case "start_demo":
-      text = demoText();
-      rows = [[{ text: "🔍 Inspect Message", callback_data: "inspect" }], [{ text: "↩️ Main Menu", callback_data: "home" }]];
-      break;
-    case "inspect":
-      text = previewText();
-      rows = [[{ text: "🚨 Warning Signs", callback_data: "warnings" }], [{ text: "↩️ Back", callback_data: "start_demo" }]];
-      break;
-    case "warnings":
-      text = warningText();
-      rows = [[{ text: "🔁 Restart Demo", callback_data: "start_demo" }], [{ text: "🏠 Main Menu", callback_data: "home" }]];
-      break;
-    case "home":
-      text = welcomeText();
-      rows = [[{ text: "▶️ Start Demo", callback_data: "start_demo" }]];
-      break;
-    default:
-      text = "This demo action is not available. Tap Restart Demo to begin again.";
-      rows = [[{ text: "🔁 Restart Demo", callback_data: "start_demo" }]];
+  let markup;
+  const data = query.data || "";
+
+  if (data === "home") {
+    text = welcomeText();
+    markup = mainMenu();
+  } else if (data === "followers_menu") {
+    text = "👥 <b>FOLLOWERS DEMO</b>\n\nSelect a quantity to preview the corresponding training screen.\n\n⚠️ No followers are delivered.";
+    markup = followersMenu();
+  } else if (data === "followers_1k" || data === "followers_2k" || data === "followers_5k" || data === "followers_10k") {
+    const amount = data.replace("followers_", "");
+    text = followersPreview(amount);
+    markup = keyboard([
+      [{ text: "↩️ Choose Another Amount", callback_data: "followers_menu" }],
+      [{ text: "🏠 Main Menu", callback_data: "home" }]
+    ]);
+  } else if (data === "blue_tick") {
+    text = blueTickPreview();
+    markup = keyboard([[{ text: "🏠 Main Menu", callback_data: "home" }]]);
+  } else if (data === "meta_one") {
+    text = metaOnePreview();
+    markup = keyboard([
+      [{ text: "✨ Story & Profile Preview", callback_data: "meta_story" }],
+      [{ text: "🤖 AI Tools Preview", callback_data: "meta_ai" }],
+      [{ text: "🎬 Creator / Business Preview", callback_data: "creator_features" }],
+      [{ text: "🏠 Main Menu", callback_data: "home" }]
+    ]);
+  } else if (data === "meta_story") {
+    text = "✨ <b>STORY & PROFILE — TRAINING PREVIEW</b>\n\nPossible feature categories include story audience lists, story previews and insights, custom fonts, app icons, and profile customisation. Exact availability varies.\n\n⚠️ This does not unlock Instagram Plus.";
+    markup = keyboard([[{ text: "↩️ Back to Meta One", callback_data: "meta_one" }], [{ text: "🏠 Main Menu", callback_data: "home" }]]);
+  } else if (data === "meta_ai") {
+    text = "🤖 <b>AI TOOLS — TRAINING PREVIEW</b>\n\nMeta subscription bundles may provide higher usage limits for selected AI image, video, and creative tools. Features and limits vary by plan and region.\n\n⚠️ This does not activate a Meta One plan.";
+    markup = keyboard([[{ text: "↩️ Back to Meta One", callback_data: "meta_one" }], [{ text: "🏠 Main Menu", callback_data: "home" }]]);
+  } else if (data === "creator_features") {
+    text = creatorPreview();
+    markup = keyboard([[{ text: "🏠 Main Menu", callback_data: "home" }]]);
+  } else if (data === "warnings") {
+    text = warningText();
+    markup = keyboard([[{ text: "🏠 Main Menu", callback_data: "home" }]]);
+  } else {
+    text = "Choose an option from the main menu to continue.";
+    markup = mainMenu();
   }
 
   return telegram("editMessageText", token, {
@@ -118,7 +195,7 @@ async function handleCallback(query, token) {
     message_id: messageId,
     text,
     parse_mode: "HTML",
-    reply_markup: keyboard(rows)
+    reply_markup: markup
   });
 }
 
@@ -155,7 +232,7 @@ module.exports = async function handler(req, res) {
       } else {
         await telegram("sendMessage", token, {
           chat_id: chatId,
-          text: "Use /start to open the phishing-awareness training demo. This bot never asks for passwords or OTPs."
+          text: "Use /start to open the demo menu. This training bot never asks for passwords or OTPs."
         });
       }
     }
